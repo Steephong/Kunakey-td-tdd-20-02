@@ -171,6 +171,21 @@ describe("Testing stock functions", function () {
     expect(stock.history.length).to.equal(4);
     done();
   });
+
+  it("5. Remove expired products", function (done) {
+    let stock = new Stock();
+    let p1 = new Product(0, "Apple", 12, new Date("2021-01-01"));
+    let p2 = new Product(1, "Banana", 20, new Date("2021-01-01"));
+    let p3 = new Product(2, "Cherry", 35, new Date("2021-01-01"));
+
+    stock.addProduct(p1);
+    stock.addProduct(p2);
+    stock.addProduct(p3);
+    stock.removeExpiredProducts();
+
+    expect(stock.products.length).to.equal(0);
+    done();
+  });
 });
 
 describe("Testing the Discount Functions", function () {

@@ -57,6 +57,7 @@ class Product {
     if (typeof name !== "string" || typeof price !== "number") {
       throw new Error("Invalid product");
     }
+
     if (price < 0) {
       throw new Error("Invalid price");
     }
@@ -88,6 +89,11 @@ class Stock {
     }
   }
 
+  removeExpiredProducts() {
+    const currentDate = new Date();
+    this.products = this.products.filter((p) => p.expirationDate > currentDate);
+  }
+
   getQuantity() {
     return this.products.length;
   }
@@ -111,10 +117,6 @@ class Discount {
   }
 
   applyToProduct(product) {
-    if (product.discounted) {
-      throw new Error("Apply only one discount per product");
-    }
-
     if (product.discountUsed.includes(this)) {
       throw new Error("Discount already used on this product");
     }
